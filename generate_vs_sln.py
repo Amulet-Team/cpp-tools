@@ -293,15 +293,19 @@ def write(
                     source_files=vcxproj_sources,
                     include_files=vcxproj_includes,
                     include_dirs="".join(f"{path};" for path in project.include_dirs),
-                    preprocessor_definitions="".join(f"{ppd};" for ppd in project.preprocessor_definitions),
+                    preprocessor_definitions="".join(
+                        f"{ppd};" for ppd in project.preprocessor_definitions
+                    ),
                     library_path="".join(
                         [f"{path};" for path in project.library_dirs]
                         + [
                             f"$(SolutionDir)$(Platform)\\$(Configuration)\\out\\{dep.name if isinstance(dep, ProjectData) else dep}\\;"
                             for dep in project.dependencies
                             if (
-                                dep.compile_mode == CompileMode.StaticLibrary and dep.source_files
-                                if isinstance(dep, ProjectData) else True
+                                dep.compile_mode == CompileMode.StaticLibrary
+                                and dep.source_files
+                                if isinstance(dep, ProjectData)
+                                else True
                             )
                         ]
                     ),
@@ -309,8 +313,10 @@ def write(
                         f"{dep.name if isinstance(dep, ProjectData) else dep}.lib;"
                         for dep in project.dependencies
                         if (
-                            dep.compile_mode == CompileMode.StaticLibrary and dep.source_files
-                            if isinstance(dep, ProjectData) else True
+                            dep.compile_mode == CompileMode.StaticLibrary
+                            and dep.source_files
+                            if isinstance(dep, ProjectData)
+                            else True
                         )
                     ),
                     library_type=library_type.value,

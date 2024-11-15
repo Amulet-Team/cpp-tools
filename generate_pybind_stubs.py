@@ -116,10 +116,12 @@ def run(output_dir: str, module: str) -> None:
 
     # Call pybind11-stubgen
     print("Running pybind11-stubgen...")
-    pybind11_stubgen.main([
-        f"--output-dir={output_dir}",
-        module,
-    ])
+    pybind11_stubgen.main(
+        [
+            f"--output-dir={output_dir}",
+            module,
+        ]
+    )
 
     # Remove stub files generated for python modules
     for stub_path in glob.iglob(
